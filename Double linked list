@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node{
+    int data;
+    struct Node *next;
+    struct Node *prev;
+};
+struct Node *addToEmpty(struct Node *head,int data)
+{
+    struct Node *temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->prev = NULL;
+    temp->data = data;
+    temp->next = NULL;
+    head = temp;
+}
+struct Node *insertFirst(struct Node *head,int data)
+{
+    struct Node *temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->prev=NULL;
+    temp->data=data;
+    temp->next=head;
+    head->prev=temp;
+    head=temp;
+    return head;
+}
+struct Node *insertEnd(struct Node *head,int data)
+{
+    struct Node *temp,*tp;
+    temp=malloc(sizeof(struct Node));
+    tp=head;
+    while(tp->next!=NULL)
+    {
+        tp=tp->next;
+    }
+    tp->next=temp;
+    temp->prev=tp;
+    temp->data=data;
+    return head;
+}
+struct Node *deleteFirst(struct Node*head)
+{
+    struct Node *temp = (struct Node*)malloc(sizeof(struct Node));
+    temp=head;
+    head=head->next;
+    free(temp);
+    head->prev=NULL;
+    return head;
+}
+struct Node *deleteLast(struct Node*head)
+{
+    struct Node *p,*q;
+    p=head;
+    while(p->next!=NULL)
+    {
+        p=p->next;
+    }
+    q=p->prev;
+    q->next=NULL;
+    free(p);
+    return head; 
+}
+void print(struct Node *head)
+{
+    struct Node *ptr=head;
+    while(ptr!=NULL)
+    {
+        printf("%d ",ptr->data);
+        ptr=ptr->next;
+    }
+}
+struct Node*reverse(struct Node*head)
+{
+    struct Node *p=head;
+    struct Node *q=p->next;
+    p->next=NULL;
+    p->prev=q;
+    while(q!=NULL)
+    {
+        q->prev=q->next;
+        q->next=p;
+        p=q;
+        q=q->prev;
+    }
+    head=p;
+    return head;
+}
+int main()
+{
+    struct Node *head = NULL;
+    head = addToEmpty(head,45); 
+    head = insertFirst(head,67);
+    head = insertEnd(head,32);
+    //head = deleteFirst(head);
+    //head = deleteLast(head);
+    print(head);
+    head=reverse(head);
+    printf("\n");
+    print(head);
+    return 0;
+}
