@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Node {
+    int data;
+    struct Node *next;
+};
+struct Node * insertAtend(struct Node *head, int data){
+    struct Node *ptr = (struct Node *) malloc(sizeof(struct Node));
+    struct Node *p = head;
+    ptr->data = data;
+    if(head==NULL)
+    {
+        ptr->next=NULL;
+        head=ptr;
+    }
+    else 
+    {
+        while(p->next!=NULL){
+            p = p->next;
+        }   
+        p->next = ptr;
+        ptr->next = NULL;
+    }
+    return head;
+}
+struct Node *reverse(struct Node *head)
+{
+    struct Node *temp=NULL,*nextnode=NULL;
+    while (head)
+    {
+        nextnode=head->next;
+        head->next=temp;
+        temp=head;
+        head=nextnode;
+    }
+    return temp;
+    
+}
+void display(struct Node *head)
+{
+    struct Node *temp=head;
+    while(temp!=NULL)
+    {
+        printf("%d->",temp->data);
+        temp=temp->next;
+    }
+    printf("NULL\n");
+}
+int main()
+{
+    struct Node *head=NULL;
+    int n;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        scanf("%d",&x);
+        head=insertAtend(head,x);
+    }
+    display(head);
+    head=reverse(head);
+    display(head);
+    return 0;
+}
