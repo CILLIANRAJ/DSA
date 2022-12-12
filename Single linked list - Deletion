@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node
+{
+    int data;
+    struct Node * link;
+};
+
+
+void linkedlistprint(struct Node *ptr)
+{
+    while (ptr != NULL)
+    {
+        printf("Element: %d\n",ptr->data);
+        ptr = ptr->link;
+    }
+
+}
+
+struct Node *deleteAtfirst(struct Node *head)
+{
+    struct Node *ptr = head;
+    head = head->link;
+    free(ptr);
+    return head;
+}
+
+struct Node *deleteAtindex(struct Node *head, int index)
+{
+    struct Node *p = head;
+    struct Node *q = head->link;
+    
+    for (int i = 0 ; i < index-1 ; i++)
+    {
+        p = p->link;
+        q = q->link;
+    }
+    p->link = q->link;
+    free(q);
+    return head;
+}    
+
+struct Node *deleteAtEnd(struct Node *head)
+{
+    struct Node *p = head;
+    struct Node *q = head->link;
+    
+    while(q->link!=NULL)
+    {
+        p = p->link;
+        q = q->link;
+    }
+    p->link = NULL;
+    free(q);
+    return head;
+}    
+
+
+int main(){
+    struct Node *head;
+    struct Node *second;
+    struct Node *third;
+    head = (struct Node *) malloc(sizeof(struct Node));
+    second = (struct Node *) malloc(sizeof(struct Node));
+    third = (struct Node *) malloc(sizeof(struct Node));
+
+    head->data = 23;
+    head->link = second;
+
+    second->data = 21;
+    second->link = third;
+
+    third->data = 1;
+    third->link = NULL;
+
+    printf("BEFORE INSERTION\n");
+    linkedlistprint(head);
+    printf("AFTER INSERTION\n");
+    //head = deleteAtfirst(head);
+    head = deleteAtindex(head, 1);
+    //head = deleteAtEnd(head);
+    linkedlistprint(head);
+    return 0;
+}
+    
