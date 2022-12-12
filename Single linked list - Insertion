@@ -1,0 +1,97 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node{
+    int data;
+    struct Node * next;
+};
+
+void linkedListTransversal(struct Node *ptr){
+        while(ptr != NULL)
+        {
+            printf("Element: %d\n",ptr->data);
+            ptr = ptr->next;
+        }
+}
+
+struct Node * insertAtfirst(struct Node *head, int data){
+    struct Node *ptr = (struct Node *) malloc(sizeof(struct Node));
+    if(head==NULL)
+    {
+        ptr->data=data;
+        ptr->next=NULL;
+        head=ptr;
+    }
+    else
+    {
+        ptr=head;
+        head->data=data;
+        head->next=ptr;
+    }
+    return head;
+}
+
+struct Node * insertAtend(struct Node *head, int data){
+    struct Node *ptr = (struct Node *) malloc(sizeof(struct Node));
+    struct Node *p = head;
+    ptr->data = data;
+    if(head==NULL)
+    {
+        ptr->next=NULL;
+        head=ptr;
+    }
+    else 
+    {
+        while(p->next!=NULL){
+            p = p->next;
+        }   
+        p->next = ptr;
+        ptr->next = NULL;
+    }
+    return head;
+    
+
+}
+
+struct Node * insertAfternode(struct Node *head, int pos, int data){
+    struct Node *ptr = (struct Node *) malloc(sizeof(struct Node)),*p,*q;
+    int i=1;
+    p=head;
+    ptr->data=data;
+    ptr->next=NULL;
+    while(i<pos && p!=NULL)
+    {
+        p=p->next;
+        i++;
+    }
+    q=p->next;
+    p->next=ptr;
+    ptr->next=q;
+    return head;
+}
+int main(){
+    struct Node * head=NULL;
+    
+    int n;
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    {
+        int x;
+        scanf("%d",&x);
+        head=insertAtend(head,x);
+    }
+    head=insertAtend(head,12345);
+    
+    
+    // printf("Before insertion\n");
+    // linkedListTransversal(head);
+    //head = insertAtfirst(head, 56);
+    //head = insertAtindex(head, 56, 1);
+    //head = insertAtend(head, 56);
+     head = insertAfternode(head, 2 , 56);
+    // printf("After insertion\n");
+    linkedListTransversal(head);
+    
+
+    return 0;
+}
