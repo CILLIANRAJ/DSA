@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *addToEmpty(int data)
+{
+    struct Node *temp = malloc(sizeof(struct Node));
+    temp->data = data;
+    temp->next = temp;
+    return temp;
+}
+struct Node *addBeg(struct Node *tail, int data)
+{
+    struct Node *new = malloc(sizeof(struct Node));
+    new->data = data;
+    new->next = tail->next;
+    tail->next = new;
+    return tail;
+}
+struct Node *addEnd(struct Node *tail, int data)
+{
+    struct Node *new = malloc(sizeof(struct Node));
+    new->data = data;
+    new->next = NULL;
+
+    new->next = tail->next;
+    tail->next = new;
+    tail = tail->next;
+    return tail;
+}
+struct Node *addBetween(struct Node *tail, int data, int pos)
+{
+    struct Node *p = tail->next;
+    struct Node *new = malloc(sizeof(struct Node));
+    new->data = data;
+    new->next = NULL;
+    while(pos>1)
+    {
+        p = p->next;
+        pos--;
+    }
+    new->next = p->next;
+    p->next = new;
+    if(p == tail)
+    {
+        tail = tail->next;
+    }
+    return tail;
+
+}
+void print(struct Node *tail)
+{
+    struct Node *p = tail->next;
+    do
+    {
+        printf("%d\n",p->data);
+        p=p->next;
+    }while(p!=tail->next);
+}
+int main()
+{
+    struct Node *tail;
+    tail = addToEmpty(45);
+    tail = addEnd(tail, 43);
+    tail = addEnd(tail,11);
+    print(tail);
+    printf("\n");
+    tail = addBetween(tail, 43, 2);
+    print(tail);
+    return 0;
+}
