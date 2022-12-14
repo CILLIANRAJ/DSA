@@ -21,6 +21,7 @@ struct Node *addBeg(struct Node *tail, int data)
     tail->next = new;
     return tail;
 }
+
 struct Node *addEnd(struct Node *tail, int data)
 {
     struct Node *new = malloc(sizeof(struct Node));
@@ -30,6 +31,24 @@ struct Node *addEnd(struct Node *tail, int data)
     new->next = tail->next;
     tail->next = new;
     tail = tail->next;
+    return tail;
+}
+struct Node *createList(struct Node *tail)
+{
+    int i,n,data;
+    printf("Enter the number of nodes of the list: ");
+    scanf("%d",&n);
+    if(n==0)
+        return tail;
+    printf("Enter the element 1: ");
+    scanf("%d",&data);
+    tail = addToEmpty(data);
+    for(i=1;i<n;i++)
+    {
+        printf("Enter the element %d: ",i+1);
+        scanf("%d",&data);
+        tail = addEnd(tail,data);
+    }
     return tail;
 }
 struct Node *addBetween(struct Node *tail, int data, int pos)
@@ -52,24 +71,75 @@ struct Node *addBetween(struct Node *tail, int data, int pos)
     return tail;
 
 }
+struct Node *delBeg(struct Node *tail)
+{
+    struct Node *temp = tail->next;
+    tail->next = temp->next;
+    free(temp);
+}
+struct Node *delBetween(struct Node *tail, int pos)
+{
+    if(tail == NULL)
+        return tail;
+    struct Node *temp = tail->next;
+    if(tail->next == tail){
+        free(tail);
+        tail = NULL;
+        return tail;
+    }
+    while(pos>2){
+        temp = temp->next;
+        pos--;
+    }
+    struct Node *temp2 = temp->next;
+    temp->next = temp2->next;
+    if(temp2 == tail)
+        tail = temp;
+    free(temp2);
+    temp2 = NULL;
+    return tail;
+}
+struct Node *delLast(struct Node *tail)
+{
+    if(tail == NULL)
+        return tail;
+    struct Node *temp = tail->next;
+    if(tail->next == tail){
+        free(tail);
+        tail = NULL;
+        return tail;
+    }
+    while(temp->next != tail)
+    {
+        temp = temp->next;
+    }
+    temp->next = tail->next;
+    free(tail);
+    tail = temp;
+    return tail;
+}
 void print(struct Node *tail)
 {
+    if(tail == NULL)
+        printf("No node in the list");
+    else{
     struct Node *p = tail->next;
     do
     {
-        printf("%d\n",p->data);
+        printf("%d\t",p->data);
         p=p->next;
     }while(p!=tail->next);
+    }
 }
 int main()
 {
-    struct Node *tail;
-    tail = addToEmpty(45);
-    tail = addEnd(tail, 43);
-    tail = addEnd(tail,11);
+    struct Node *tail = NULL;
+    tail = createList(tail);
+    printf("BEFORE DELITION\n");
     print(tail);
+    tail = delLast(tail);
     printf("\n");
-    tail = addBetween(tail, 43, 2);
+    printf("AFTER DELITION\n");
     print(tail);
     return 0;
 }
