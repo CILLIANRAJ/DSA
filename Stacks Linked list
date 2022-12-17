@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Node{
+    int data;
+    struct Node *next;
+};
+struct Node *top=NULL;
+
+int isEmpty()
+{
+    if(top == NULL)
+    {
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+int pop()
+{
+    struct Node *temp;
+    int val;
+    if(isEmpty())
+    {
+        printf("Stack Underflow");
+        exit(1);
+    }
+    temp = top;
+    val = temp->data;
+    top = top->next;
+    free(temp);
+    temp=NULL;
+    return val;
+}
+int peek()
+{
+    if(isEmpty())
+    {
+        printf("Stack Underflow");
+        exit(1);
+    }
+    return top->data;
+}
+
+void push(int data)
+{
+    struct Node *new;
+    new = (struct Node *)malloc(sizeof(struct Node));
+    new->data=data;
+    new->next=top;
+    top=new;
+
+}
+void print()
+{
+    struct Node *temp;
+    temp=top;
+    while(temp)
+    {
+        printf("%d ",temp->data);
+        temp=temp ->next;
+    }
+    printf("\n");
+}
+int main()
+{
+    int choice, data;
+    while(1)
+    {
+        printf("\n");
+        printf("1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Print top element\n");
+        printf("4. Print all elements\n");
+        printf("5. Quit\n");
+        printf("Enter your choice ");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+                printf("Enter the element to be pushed: ");
+                scanf("%d",&data);
+                push(data);
+                break;
+            case 2:
+                data = pop();
+                printf("Element poped out is: %d\n",data);
+                break;
+            case 3:
+                printf("Top element is: %d\n",peek());
+                break;
+            case 4:
+                print();
+            case 5:
+                exit(1);
+            default:
+                printf("Wrong Choices\n");
+                break;
+        }
+    }
+    return 0;
+}
