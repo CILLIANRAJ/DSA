@@ -14,20 +14,6 @@ struct node* createNode(int data){
     n->right = NULL;
     return n;
 }
-void preOrder(struct  node* root){
-    if(root!=NULL){
-        printf("%d ", root->data);
-        preOrder(root->left);
-        preOrder(root->right);
-    }
-}
-void postOrder(struct  node* root){
-    if(root!=NULL){
-        postOrder(root->left);
-        postOrder(root->right);
-        printf("%d ", root->data);
-    }
-}
 void inOrder(struct  node* root){
     if(root!=NULL){
         inOrder(root->left);
