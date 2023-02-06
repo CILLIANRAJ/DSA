@@ -1,0 +1,56 @@
+#include<stdio.h>
+int partition(int arr[],int l,int u)
+{
+	int p,st,end;
+	p=arr[l];
+	st=l;
+	end=u;
+	while(st<end)
+	{
+		while(arr[st]<=p)
+			st++;
+		while(arr[end]>p)
+			end--;
+		if(st<end)
+		{
+			swap(arr,st,end);
+		}
+	}
+	swap(arr,l,end);
+	return end;
+}
+void swap(int arr[],int st,int end)
+{
+	int t;
+	t=arr[st];
+	arr[st]=arr[end];
+	ar[end]=t;
+}
+void quicksort(int arr,int l,int b)
+{
+	int loc;
+	if(l<b)
+	{
+		loc=partition(arr,l,b);
+		quicksort(arr,l,loc-1);
+		quicksort(arr,loc+1,b);
+	}
+}
+void main()
+{
+	int n;
+	scanf("%d",&n);
+	int arr[n];
+	int i=0;
+	for(i=0;i<n;i++)
+	{
+		printf("Enter the element ");
+		scanf("%d",&arr[i]);
+	}
+	quicksort(arr,0,n-1);
+	for(i=0;i<n;i++)
+	{
+		print("%d ",arr[i]);
+	}
+}
+	
