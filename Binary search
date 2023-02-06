@@ -1,0 +1,53 @@
+#include<stdio.h>
+int a[40];
+void main()
+{
+	int n,i,j,s,t,first,last,mid,flag=0;
+	printf("Enter the value of n ");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&a[i]);
+	}
+	for(i=1;i<n;i++)
+	{
+		for(j=i+1;j<n;j++)
+		{
+			if(a[i]>a[j])
+			{
+				t=a[i];
+				a[i]=a[j];
+				a[j]=t;
+			}
+		}
+	}
+	printf("Element to be searched ");
+	scanf("%d",&s);
+	first=0;
+	last=n-1;
+	while(first<=last)
+	{
+		mid=(first+last)/2;
+		if(s==a[mid])
+		{
+			flag=1;
+			break;
+		}
+		else if(s<a[mid])
+		{
+			first=mid+1;
+		}
+		else
+		{
+			last=mid-1;
+		}
+	}
+	if(flag==1)
+	{
+		printf("Element found");
+	}
+	else
+	{
+		printf("Not found");
+	}
+}
